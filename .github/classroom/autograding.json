@@ -3,7 +3,7 @@
     {
       "name": "max",
       "setup": "make build",
-      "run": "./build unit-tests max",
+      "run": "./build/unit-tests max",
       "input": "",
       "output": "",
       "comparison": "exact",
