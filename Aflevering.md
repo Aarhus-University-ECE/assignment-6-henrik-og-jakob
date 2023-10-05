@@ -25,3 +25,21 @@ printf("x=%d, y=%d, z=%d\n", x, y, z);
 
 ## 2
 See max.c for code answer.
+
+## 3
+### a
+![](exercise3.jpeg)
+
+### b
+See list.c for code answer. 
+
+### c
+The code loops infinitely and only prints out the value of the second element of the list. This happens since it never goes to the next element inside the loop.
+
+### d
+Since everything else is correct and it only needs to go through the rest of the elements, so you just have to add that singular extra line. The correction can be seen in list.c. As seen in the code an assertion is also added similarly to the add function, but it isn't necessary for it to be functional.
+
+### e
+See list.c for code answer.
+
+## Challenge

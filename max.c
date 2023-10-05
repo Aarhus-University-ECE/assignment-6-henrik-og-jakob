@@ -4,7 +4,7 @@
 
 int max(int *numbers, int size) {
   assert(size > 0); // assert the assumption from the exercise description
-  int max_value = 0;
+  int max_value = numbers[0];
 
   // this goes through and compares all values of the array
   for (int i = 0; i < size; i++) {
