@@ -87,6 +87,6 @@ int main() {
         RAM++;
     }
     
-    printf("%d\n", counter);
+    printf("\n%d\n", counter);
     return 0;
 }
