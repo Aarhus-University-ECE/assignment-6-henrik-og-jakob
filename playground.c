@@ -1,74 +1,92 @@
-#include <assert.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-// A struct that contains a dynamic array of integers
-// The struct owns the array and is responsible for freeing it
-typedef struct
-{
-    int *buffer;
-    size_t size;
-    size_t capacity;
-} array_of_int;
 
-array_of_int read_int_array_from_file(const char *filename)
-{
-    assert(filename != NULL);
-    FILE *file = fopen(filename, "r");
-    if (file == NULL)
-    {
-        fprintf(stderr, "Could not open file '%s'\n", filename);
-        exit(1);
+int arr2num (int arr[3]) {
+    int num = 0;
+    for (int i = 0; i < 3; i++) {
+        num = num * 10 + arr[i];
     }
-    const size_t initial_capacity = 256;
-    size_t capacity = initial_capacity;
-    int *array = malloc(capacity * sizeof(int)); // Start with a smaller initial capacity
-    size_t size = 0;
-    if (array == NULL)
+    return num;
+}
+
+void code_x (int x, int y, int z, int inp[1000][3], int *RAM, int registers[10]) {
+    int temp1;
+    
+    switch (x)
     {
-        fprintf(stderr, "Memory allocation failed\n");
-        exit(1);
+    case 2:
+        registers[y] = z;
+        break;
+    case 3:
+        registers[y] = (registers[y] + z) % 1000;
+        break;
+    case 4:
+        registers[y] = (registers[y] * z) % 1000;
+        break;
+    case 5:
+        registers[y] = registers[z];
+        break;
+    case 6:
+        registers[y] = (registers[y] + registers[z]) % 1000;
+        break;
+    case 7:
+        registers[y] = (registers[y] * registers[z]) % 1000;
+        break;
+    case 8:
+        registers[y] = arr2num(inp[z]);
+        break;
+    case 9:
+        temp1 = registers[y];
+        inp[z][0] = temp1 / 100;
+        inp[z][1] = (temp1 - inp[z][0] * 100) / 10;
+        inp[z][2] = (temp1 - inp[z][0] * 100 - inp[z][1] * 10);
+        break;
+    case 0:
+    if (registers[z] != 0)
+        *RAM = registers[y] - 1;
+    break;
+    default:
+        break;
     }
-    while (true)
-    {
-        int value = 0;
-        int status = fscanf(file, "%d", &value);
-        if (status == EOF)
-        {
+}
+
+int main() {
+    int inp[1000][3];
+    int registers[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    for (int i = 0; i < 1000; i++) {
+        for (int j = 0; j < 3; j++) {
+            inp[i][j] = 0;
+        }
+    }
+
+    int i = 0;
+    int temp;
+    while (1) {
+        scanf("%d", &temp);
+        inp[i][0] = temp / 100;
+        if (temp / 100 == 1) {
             break;
         }
-        if (size >= capacity)
-        {
-            // Double the capacity and reallocate memory
-            capacity *= 2;
-            int *new_array = realloc(array, capacity * sizeof(int));
-            if (new_array == NULL)
-            {
-                fprintf(stderr, "Memory reallocation failed\n");
-                free(array);
-                exit(1);
-            }
-            array = new_array;
-        }
-        array[size] = value; // Insert the value into the array
-        size++;
+        inp[i][1] = (temp - inp[i][0] * 100) / 10;
+        inp[i][2] = (temp - inp[i][0] * 100 - inp[i][1] * 10);
+        i++;
     }
-    fclose(file);
-    return (array_of_int){.buffer = array, .size = size, .capacity = capacity};
-}
-int main(int argc, char **argv)
-{
     
-    if (argc != 2)
-    {
-        fprintf(stderr, "Usage: %s <filename>\n", argv[0]);
-        exit(1);
+    int RAM = 0;
+    int counter = 0;
+    int NineCount = 0;
+    while (RAM < 1000) {
+        counter++;
+        if (inp[RAM][0] == 1) {
+            break;
+        }
+        if (inp[RAM][0] == 0 && inp[RAM][1] == 0 && inp[RAM][2] == 0) {
+            break;
+        }
+        code_x(inp[RAM][0], inp[RAM][1], inp[RAM][2], inp, &RAM, registers);
+        RAM++;
     }
-    array_of_int array = read_int_array_from_file("nums_file.txt");
-    for (size_t i = 0; i < array.size; i++)
-    {
-        printf("%d\n", array.buffer[i]);
-    }
-    free(array.buffer);
+    
+    printf("\n%d\n", counter);
     return 0;
 }

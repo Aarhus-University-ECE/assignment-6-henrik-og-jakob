@@ -21,11 +21,11 @@ void add(node *head, int x) {
 
 // exersice 3.b
 int size(node *l) {
-  assert(l != NULL);
+  assert(l != NULL); // same precondition as add
   int counter = 0;
-  node *p = l->next;
-  while (p != NULL) {
-    p = p->next;
+  node *p = l->next; // declare a pointer p of type node
+  while (p != NULL) { // this is true while the pointer has not reached the end of the list yet
+    p = p->next; // move to the next element
     counter++;
   }
 	return counter;
@@ -36,11 +36,11 @@ void printout(node *l) {
   // pre:  head points to the first, empty element.
   //       The last element's next is NULL
   // post: The values of the list are printed out
-  assert(l != NULL);
-  node *p = l->next;
-  while (p != NULL) {
+  assert(l != NULL); // same precondition as add
+  node *p = l->next; // declare a pointer p of type node
+  while (p != NULL) { // this is true while the pointer has not reached the end of the list yet
     printf("%d, ", p->data);
-    p = p->next;
+    p = p->next; // move to the next element
   }
   printf("\n");
 }
@@ -50,13 +50,13 @@ int largest(node *l) {
   // pre:  head poinst to the first, empty element.
   // 	     The last element's next is NULL.
   // post: Returns the largest value of the list
-  assert(l != NULL);
-  node *p = l->next;
+  assert(l != NULL); // same precondition as add
+  node *p = l->next; // declare a pointer p of type node
   int max = p->data;
-  while (p != NULL) {
-    if (p->data > max)
-      max = p->data;
-    p = p->next;
+  while (p != NULL) { // this is true while the pointer has not reached the end of the list ye
+    if (p->data > max) 
+      max = p->data; // if the new element is larger than the current largest, replace it
+    p = p->next; // move to the next element
   }
   return max;
 }
