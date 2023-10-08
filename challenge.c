@@ -37,9 +37,9 @@ void code_x (int x, int y, int z, int inp[1000][3], int *RAM, int registers[10])
         break;
     case 9:
         temp1 = registers[y];
-        inp[z][0] = temp1 / 100;
-        inp[z][1] = (temp1 - inp[z][0] * 100) / 10;
-        inp[z][2] = (temp1 - inp[z][0] * 100 - inp[z][1] * 10);
+        inp[z][0] = temp1 / 100; // get first digit
+        inp[z][1] = (temp1 - inp[z][0] * 100) / 10; // get second digit
+        inp[z][2] = (temp1 - inp[z][0] * 100 - inp[z][1] * 10); // get third digit
         break;
     case 0:
     if (registers[z] != 0)
@@ -64,17 +64,16 @@ int main() {
     while (1) {
         scanf("%d", &temp);
         inp[i][0] = temp / 100;
-        if (temp / 100 == 1) {
+        if (temp / 100 == 1) { // get first digit of input
             break;
         }
-        inp[i][1] = (temp - inp[i][0] * 100) / 10;
-        inp[i][2] = (temp - inp[i][0] * 100 - inp[i][1] * 10);
+        inp[i][1] = (temp - inp[i][0] * 100) / 10; // get second digit of input
+        inp[i][2] = (temp - inp[i][0] * 100 - inp[i][1] * 10); // get third digit of input
         i++;
     }
     
     int RAM = 0;
     int counter = 0;
-    int NineCount = 0;
     while (RAM < 1000) {
         counter++;
         if (inp[RAM][0] == 1) {
